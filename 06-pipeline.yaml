@@ -6,6 +6,8 @@ spec:
   resources:
     - name: repo
       type: git
+    - name: pull-request
+      type: pullRequest
   tasks:
     # Run application tests
     - name: test
@@ -15,7 +17,14 @@ spec:
         inputs:
           - name: repo # name of the Task input (see Task definition)
             resource: repo # name of the Pipeline resource
-
+          - name: pr
+            resource: pull-request
+        outputs:
+          - name: pr
+            resource: pull-request
+      params:
+        - name: status
+          value: "pending"
     # # Build docker image and push to registry
     # - name: build-and-push
     #   taskRef:

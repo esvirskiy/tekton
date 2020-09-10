@@ -1,23 +1,22 @@
-apiVersion: tekton.dev/v1beta1
+apiVersion: tekton.dev/v1alpha1
 kind: Task
 metadata:
   name: test
 spec:
   inputs:
     resources:
-      - name: repo
-        type: git
       - name: pr
         type: pullRequest
+    params:
+      - name: status
+        type: string
   outputs:
     resources:
       - name: pr
         type: pullRequest
-
   steps:
     - name: run-test
       image: golang:1.14-alpine
-      workingDir: /workspace/repo/src
       command: ["bash"]
       args:
         - -c
